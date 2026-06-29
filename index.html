@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gandhi House — VWMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow:  #F5C200;
+      --yellow-d:#C99D00;
+      --black:   #0D0D0D;
+      --card:    #161616;
+      --card2:   #1E1E1E;
+      --cream:   #F5F0E8;
+      --slate:   #8A8A8A;
+      --border:  rgba(245,194,0,0.18);
+      --border-l:rgba(0,0,0,0.1);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--black); color:var(--cream); overflow-x:hidden; }
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-track { background:var(--black); }
+    ::-webkit-scrollbar-thumb { background:var(--yellow); }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      height:58px; display:flex; align-items:center; justify-content:space-between;
+      padding:0 2.8rem;
+      background:rgba(13,13,13,0.92); backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-left { display:flex; align-items:baseline; gap:0.6rem; }
+    .nav-house { font-family:'Cormorant Garamond',serif; font-size:1.18rem; font-weight:700; color:var(--yellow); letter-spacing:0.04em; }
+    .nav-school { font-size:0.68rem; color:var(--slate); font-weight:500; letter-spacing:0.12em; text-transform:uppercase; }
+    .nav-links { display:flex; gap:0.2rem; }
+    .nav-links a {
+      color:rgba(245,240,232,0.55); text-decoration:none; font-size:0.75rem;
+      font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+      padding:0.4rem 0.9rem; border-radius:2px; transition:color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color:var(--yellow); background:rgba(245,194,0,0.07); }
+
+    /* ── TICKER ── */
+    .ticker {
+      background:var(--yellow); color:var(--black); padding:0.5rem 0;
+      overflow:hidden; white-space:nowrap;
+      position:fixed; top:58px; left:0; right:0; z-index:199;
+    }
+    .ticker-inner { display:inline-flex; animation:ticker 30s linear infinite; }
+    .ticker-inner span { font-size:0.68rem; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; padding:0 2.2rem; }
+    .ticker-dot { color:rgba(13,13,13,0.35); font-size:0.5rem; vertical-align:middle; }
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SHARED ── */
+    section { padding:6rem 2.8rem; }
+    .section-inner { max-width:1080px; margin:0 auto; }
+    .section-label {
+      display:inline-flex; align-items:center; gap:0.6rem;
+      font-size:0.68rem; font-weight:600; letter-spacing:0.2em;
+      text-transform:uppercase; color:var(--yellow); margin-bottom:0.9rem;
+    }
+    .section-label::before { content:''; display:block; width:20px; height:1.5px; background:var(--yellow); }
+    .section-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(2.4rem,4vw,3.6rem); font-weight:700; line-height:1.1; margin-bottom:1rem;
+    }
+    .section-sub { font-size:0.96rem; color:var(--slate); line-height:1.8; max-width:580px; font-weight:300; }
+    .btn {
+      display:inline-block; padding:0.75rem 1.8rem; font-size:0.78rem; font-weight:600;
+      letter-spacing:0.1em; text-transform:uppercase; text-decoration:none;
+      border-radius:2px; transition:all 0.2s; cursor:pointer; border:none;
+    }
+    .btn-primary { background:var(--yellow); color:var(--black); }
+    .btn-primary:hover { background:#ffd740; }
+    .btn-ghost { border:1px solid var(--border); color:rgba(245,240,232,0.6); background:transparent; }
+    .btn-ghost:hover { border-color:var(--yellow); color:var(--yellow); }
+
+    /* ── HERO ── */
+    #home {
+      min-height:100vh; background:var(--black);
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; padding:9rem 2.8rem 4rem; gap:3rem;
+      position:relative; overflow:hidden;
+    }
+    .hero-watermark {
+      position:absolute; right:-4rem; top:50%; transform:translateY(-50%);
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(20rem,35vw,46rem); font-weight:700;
+      color:var(--yellow); opacity:0.04; line-height:1;
+      pointer-events:none; user-select:none; letter-spacing:-0.05em;
+    }
+    .hero-left { position:relative; z-index:2; }
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:0.6rem;
+      font-size:0.7rem; font-weight:600; letter-spacing:0.2em;
+      text-transform:uppercase; color:var(--yellow); margin-bottom:1.4rem;
+    }
+    .hero-eyebrow::before { content:''; display:block; width:28px; height:1.5px; background:var(--yellow); }
+    .hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(3.8rem,6.5vw,7rem); font-weight:700; line-height:0.95; letter-spacing:-0.02em; }
+    .hero h1 .line1 { color:var(--cream); display:block; }
+    .hero h1 .line2 { color:var(--yellow); font-style:italic; display:block; }
+    .hero h1 .line3 { color:var(--cream); display:block; }
+    .hero-desc { margin-top:2rem; font-size:1rem; color:var(--slate); line-height:1.8; max-width:420px; font-weight:300; }
+    .hero-cta { margin-top:2.4rem; display:flex; gap:1rem; flex-wrap:wrap; }
+    .hero-right { display:flex; align-items:center; justify-content:center; position:relative; z-index:2; }
+    .shield-wrap { position:relative; animation:floatShield 5s ease-in-out infinite; }
+    @keyframes floatShield { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+    .shield-glow { position:absolute; inset:-40px; background:radial-gradient(circle,rgba(245,194,0,0.18) 0%,transparent 70%); pointer-events:none; }
+    .shield-svg { width:clamp(180px,22vw,290px); display:block; }
+
+    /* ── VALUES ── */
+    #values { background:var(--cream); color:var(--black); }
+    #values .section-label { color:var(--yellow-d); }
+    #values .section-label::before { background:var(--yellow-d); }
+    #values .section-title { color:var(--black); }
+    #values .section-sub { color:#555; }
+    .values-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1px; margin-top:3.5rem;
+      background:var(--border-l); border:1px solid var(--border-l);
+    }
+    .value-card { background:var(--cream); padding:2.4rem 2rem; transition:background 0.2s; }
+    .value-card:hover { background:#ece8e0; }
+    .value-icon { font-size:1.8rem; margin-bottom:1rem; display:block; }
+    .value-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:700; color:var(--black); margin-bottom:0.6rem; }
+    .value-card p { font-size:0.88rem; color:#666; line-height:1.75; }
+
+    /* ── MEMBERS ── */
+    #members { background:var(--black); }
+    .members-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:3rem; gap:1rem; flex-wrap:wrap; }
+    .members-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1px; background:var(--border); }
+    .member-card {
+      background:var(--card); padding:1.8rem 1.5rem;
+      transition:background 0.2s; position:relative; overflow:hidden; cursor:pointer;
+    }
+    .member-card::before {
+      content:''; position:absolute; top:0; left:0;
+      width:3px; height:0; background:var(--yellow); transition:height 0.3s;
+    }
+    .member-card:hover { background:var(--card2); }
+    .member-card:hover::before { height:100%; }
+    .member-avatar {
+      width:48px; height:48px; background:var(--border); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:700;
+      color:var(--yellow); margin-bottom:1rem; border:1px solid var(--border);
+    }
+    .member-name { font-size:0.9rem; font-weight:600; color:var(--cream); margin-bottom:0.25rem; }
+    .member-role { font-size:0.72rem; color:var(--slate); letter-spacing:0.06em; }
+    .member-card-hint { font-size:0.65rem; color:rgba(245,194,0,0.4); margin-top:0.7rem; letter-spacing:0.04em; }
+
+    /* ── WORKS ── */
+    #works { background:var(--card); }
+    .works-intro { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:end; margin-bottom:3.5rem; }
+    .works-filter { display:flex; gap:0.5rem; flex-wrap:wrap; }
+    .filter-btn {
+      padding:0.4rem 1rem; font-size:0.72rem; font-weight:500;
+      letter-spacing:0.08em; text-transform:uppercase;
+      border:1px solid var(--border); background:transparent; color:var(--slate);
+      cursor:pointer; border-radius:2px; transition:all 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover { background:var(--yellow); color:var(--black); border-color:var(--yellow); }
+    .works-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1px; background:var(--border); }
+    .work-card {
+      background:var(--black); padding:2.2rem 2rem;
+      transition:background 0.2s; position:relative; cursor:pointer;
+    }
+    .work-card:hover { background:#121212; }
+    .work-tag {
+      display:inline-block; font-size:0.65rem; font-weight:600;
+      letter-spacing:0.14em; text-transform:uppercase;
+      padding:0.25rem 0.6rem; border-radius:2px; margin-bottom:1.1rem;
+    }
+    .tag-story  { background:rgba(245,194,0,0.12); color:var(--yellow); }
+    .tag-poem   { background:rgba(180,120,255,0.12); color:#c084fc; }
+    .tag-song   { background:rgba(52,211,153,0.12); color:#34d399; }
+    .tag-arg    { background:rgba(248,113,113,0.12); color:#f87171; }
+    .tag-essay  { background:rgba(96,165,250,0.12); color:#60a5fa; }
+    .work-title { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; color:var(--cream); line-height:1.2; margin-bottom:0.5rem; }
+    .work-author { font-size:0.75rem; color:var(--slate); margin-bottom:0.9rem; }
+    .work-excerpt { font-size:0.86rem; color:rgba(245,240,232,0.5); line-height:1.7; }
+    .work-footer {
+      margin-top:1.4rem; padding-top:1rem; border-top:1px solid var(--border);
+      font-size:0.7rem; color:var(--slate); display:flex; justify-content:space-between; align-items:center;
+    }
+    .work-read { color:var(--yellow); font-weight:600; letter-spacing:0.08em; text-transform:uppercase; font-size:0.68rem; }
+    .arg-glitch { font-family:'Courier New',monospace; font-size:0.68rem; color:rgba(248,113,113,0.6); letter-spacing:0.04em; margin-top:0.5rem; animation:glitch 4s ease-in-out infinite; }
+    @keyframes glitch { 0%,90%,100%{opacity:0.6;letter-spacing:0.04em} 92%{opacity:1;letter-spacing:0.12em;color:#f87171} 94%{opacity:0.3;letter-spacing:0} 96%{opacity:1} }
+    .work-submit {
+      background:transparent; border:1px dashed var(--border);
+      display:flex; align-items:center; justify-content:center;
+      gap:1rem; padding:2rem; text-align:center;
+    }
+    .work-submit p { font-size:0.88rem; color:var(--slate); }
+    .work-submit strong { color:var(--yellow); }
+
+    /* ── ABOUT ── */
+    #about { background:var(--black); }
+    .about-grid { display:grid; grid-template-columns:1fr 1.4fr; gap:5rem; align-items:start; margin-top:1rem; }
+    .about-stat-stack { margin-top:2.5rem; display:flex; flex-direction:column; gap:0; border:1px solid var(--border); }
+    .about-stat { padding:1.4rem 1.8rem; border-bottom:1px solid var(--border); display:flex; align-items:baseline; gap:1rem; }
+    .about-stat:last-child { border-bottom:none; }
+    .about-stat-num { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:var(--yellow); line-height:1; min-width:3rem; }
+    .about-stat-label { font-size:0.82rem; color:var(--slate); line-height:1.4; }
+    .about-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(1.6rem,2.8vw,2.2rem); font-style:italic; font-weight:400; line-height:1.5; color:var(--cream); border-left:3px solid var(--yellow); padding-left:2rem; margin-bottom:2.4rem; }
+    .about-quote cite { display:block; margin-top:0.8rem; font-size:0.8rem; font-style:normal; font-weight:500; color:var(--slate); letter-spacing:0.08em; }
+    .about-body { font-size:0.96rem; color:var(--slate); line-height:1.85; margin-bottom:1.2rem; }
+    .about-moderator { margin-top:2.5rem; display:flex; align-items:center; gap:1.2rem; padding:1.4rem 1.6rem; border:1px solid var(--border); border-radius:2px; }
+    .mod-avatar { width:52px; height:52px; flex-shrink:0; background:rgba(245,194,0,0.1); border:1px solid var(--border); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:700; color:var(--yellow); }
+    .mod-label { font-size:0.68rem; color:var(--slate); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.2rem; }
+    .mod-name { font-size:0.96rem; font-weight:600; color:var(--cream); }
+    .mod-email { font-size:0.78rem; color:var(--yellow); }
+
+    /* ── FOOTER ── */
+    footer { background:#070707; border-top:1px solid var(--border); padding:2.5rem 2.8rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+    .footer-brand { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:700; color:var(--yellow); }
+    .footer-links { display:flex; gap:1.6rem; }
+    .footer-links a { font-size:0.72rem; color:var(--slate); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s; }
+    .footer-links a:hover { color:var(--yellow); }
+    .footer-copy { font-size:0.7rem; color:#333; }
+
+    /* ══════════════════════════════════════
+       PANEL — shared for works + members
+    ══════════════════════════════════════ */
+    .panel-overlay {
+      position:fixed; inset:0; z-index:500;
+      background:rgba(0,0,0,0.75); backdrop-filter:blur(6px);
+      opacity:0; pointer-events:none; transition:opacity 0.3s;
+    }
+    .panel-overlay.open { opacity:1; pointer-events:all; }
+    .panel {
+      position:fixed; top:0; right:0; bottom:0; z-index:501;
+      width:min(680px,100vw);
+      background:var(--black); border-left:1px solid var(--border);
+      overflow-y:auto; padding:3rem 2.8rem;
+      transform:translateX(100%); transition:transform 0.38s cubic-bezier(0.22,1,0.36,1);
+    }
+    .panel.open { transform:translateX(0); }
+    .panel-close {
+      position:sticky; top:0;
+      display:flex; justify-content:flex-end; margin-bottom:2rem;
+      background:var(--black); padding-bottom:0.5rem;
+    }
+    .panel-close-btn {
+      background:var(--card2); border:1px solid var(--border); color:var(--slate);
+      font-size:0.75rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+      padding:0.5rem 1.1rem; border-radius:2px; cursor:pointer; transition:all 0.2s;
+    }
+    .panel-close-btn:hover { border-color:var(--yellow); color:var(--yellow); }
+
+    /* work panel */
+    .panel-tag { display:inline-block; font-size:0.65rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; padding:0.25rem 0.6rem; border-radius:2px; margin-bottom:1.2rem; }
+    .panel-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; line-height:1.1; margin-bottom:0.6rem; }
+    .panel-author { font-size:0.8rem; color:var(--slate); margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
+    .panel-body {
+      font-size:1rem; line-height:1.9; color:rgba(245,240,232,0.8);
+      font-family:'Cormorant Garamond',serif; font-size:1.12rem;
+      white-space:pre-wrap;
+    }
+    .panel-body.arg-body { font-family:'Courier New',monospace; font-size:0.88rem; color:#f87171; line-height:1.8; }
+
+    /* member panel */
+    .member-panel-header { display:flex; align-items:center; gap:1.6rem; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
+    .member-panel-avatar {
+      width:80px; height:80px; flex-shrink:0;
+      background:rgba(245,194,0,0.08); border:1px solid var(--border); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:var(--yellow);
+    }
+    .member-panel-name { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:var(--cream); }
+    .member-panel-role { font-size:0.78rem; color:var(--yellow); letter-spacing:0.1em; text-transform:uppercase; margin-top:0.3rem; }
+    .member-panel-bio { font-size:0.96rem; color:var(--slate); line-height:1.85; margin-bottom:1.4rem; }
+    .member-panel-works { margin-top:2rem; }
+    .member-panel-works h4 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:700; color:var(--cream); margin-bottom:1rem; }
+    .member-work-link {
+      display:block; padding:0.9rem 1.2rem; border:1px solid var(--border);
+      margin-bottom:1px; background:var(--card); color:var(--cream);
+      font-size:0.86rem; cursor:pointer; transition:background 0.2s, border-color 0.2s;
+      text-decoration:none;
+    }
+    .member-work-link:hover { background:var(--card2); border-color:var(--yellow); color:var(--yellow); }
+    .member-work-link span { font-size:0.68rem; color:var(--slate); float:right; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:860px) {
+      nav { padding:0 1.4rem; }
+      .nav-links a { padding:0.4rem 0.6rem; font-size:0.68rem; }
+      #home { grid-template-columns:1fr; padding:9rem 1.4rem 4rem; }
+      .hero-right { display:none; }
+      .values-grid { grid-template-columns:1fr 1fr; }
+      .works-intro { grid-template-columns:1fr; gap:1.5rem; }
+      .about-grid { grid-template-columns:1fr; gap:3rem; }
+      section { padding:4rem 1.4rem; }
+      footer { padding:2rem 1.4rem; }
+      .panel { padding:2rem 1.4rem; }
+    }
+    @media (max-width:580px) {
+      .values-grid { grid-template-columns:1fr; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *, *::before, *::after { animation:none !important; transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <span class="nav-house">Gandhi House</span>
+    <span class="nav-school">VWMS</span>
+  </div>
+  <div class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#values">Values</a>
+    <a href="#members">Members</a>
+    <a href="#works">Works</a>
+    <a href="#about">About</a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Gandhi House</span><span class="ticker-dot">◆</span>
+    <span>Unity</span><span class="ticker-dot">◆</span>
+    <span>VWMS</span><span class="ticker-dot">◆</span>
+    <span>Courage</span><span class="ticker-dot">◆</span>
+    <span>Creativity</span><span class="ticker-dot">◆</span>
+    <span>Pride</span><span class="ticker-dot">◆</span>
+    <span>Stories &amp; Songs</span><span class="ticker-dot">◆</span>
+    <span>Mystery &amp; ARGs</span><span class="ticker-dot">◆</span>
+    <span>Legacy</span><span class="ticker-dot">◆</span>
+    <span>Yellow &amp; Black</span><span class="ticker-dot">◆</span>
+    <span>Gandhi House</span><span class="ticker-dot">◆</span>
+    <span>Unity</span><span class="ticker-dot">◆</span>
+    <span>VWMS</span><span class="ticker-dot">◆</span>
+    <span>Courage</span><span class="ticker-dot">◆</span>
+    <span>Creativity</span><span class="ticker-dot">◆</span>
+    <span>Pride</span><span class="ticker-dot">◆</span>
+    <span>Stories &amp; Songs</span><span class="ticker-dot">◆</span>
+    <span>Mystery &amp; ARGs</span><span class="ticker-dot">◆</span>
+    <span>Legacy</span><span class="ticker-dot">◆</span>
+    <span>Yellow &amp; Black</span><span class="ticker-dot">◆</span>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<section id="home">
+  <div class="hero-watermark" aria-hidden="true">G</div>
+  <div class="hero-left">
+    <p class="hero-eyebrow">VWMS · Est. 2024</p>
+    <h1>
+      <span class="line1">We Are</span>
+      <span class="line2">Gandhi</span>
+      <span class="line3">House.</span>
+    </h1>
+    <p class="hero-desc">Bold on the field. Deep on the page. Relentless in spirit. Yellow and black — not just colours, but a way of being.</p>
+    <div class="hero-cta">
+      <a href="#works" class="btn btn-primary">Read Our Works</a>
+      <a href="#members" class="btn btn-ghost">Meet the House</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="shield-wrap">
+      <div class="shield-glow"></div>
+      <svg class="shield-svg" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Gandhi House shield">
+        <path d="M12 12 H188 V148 Q188 218 100 238 Q12 218 12 148 Z" fill="#F5C200"/>
+        <path d="M22 22 H178 V147 Q178 210 100 228 Q22 210 22 147 Z" fill="#0D0D0D"/>
+        <line x1="22" y1="110" x2="178" y2="110" stroke="#F5C200" stroke-width="2.5"/>
+        <line x1="100" y1="22" x2="100" y2="228" stroke="#F5C200" stroke-width="2.5"/>
+        <circle cx="61" cy="66" r="16" fill="none" stroke="#F5C200" stroke-width="2.2"/>
+        <circle cx="61" cy="66" r="6" fill="#F5C200"/>
+        <line x1="61" y1="44" x2="61" y2="38" stroke="#F5C200" stroke-width="2"/>
+        <line x1="61" y1="88" x2="61" y2="94" stroke="#F5C200" stroke-width="2"/>
+        <line x1="39" y1="66" x2="33" y2="66" stroke="#F5C200" stroke-width="2"/>
+        <line x1="83" y1="66" x2="89" y2="66" stroke="#F5C200" stroke-width="2"/>
+        <line x1="46" y1="51" x2="41" y2="46" stroke="#F5C200" stroke-width="2"/>
+        <line x1="76" y1="81" x2="81" y2="86" stroke="#F5C200" stroke-width="2"/>
+        <line x1="76" y1="51" x2="81" y2="46" stroke="#F5C200" stroke-width="2"/>
+        <line x1="46" y1="81" x2="41" y2="86" stroke="#F5C200" stroke-width="2"/>
+        <rect x="116" y="38" width="46" height="34" rx="2" fill="none" stroke="#F5C200" stroke-width="2"/>
+        <line x1="139" y1="38" x2="139" y2="72" stroke="#F5C200" stroke-width="1.5"/>
+        <line x1="122" y1="48" x2="135" y2="48" stroke="#F5C200" stroke-width="1.5" opacity="0.7"/>
+        <line x1="122" y1="55" x2="135" y2="55" stroke="#F5C200" stroke-width="1.5" opacity="0.7"/>
+        <line x1="122" y1="62" x2="135" y2="62" stroke="#F5C200" stroke-width="1.5" opacity="0.7"/>
+        <line x1="143" y1="48" x2="157" y2="48" stroke="#F5C200" stroke-width="1.5" opacity="0.7"/>
+        <line x1="143" y1="55" x2="157" y2="55" stroke="#F5C200" stroke-width="1.5" opacity="0.7"/>
+        <line x1="143" y1="62" x2="157" y2="62" stroke="#F5C200" stroke-width="1.5" opacity="0.7"/>
+        <text x="100" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="52" font-weight="700" fill="#F5C200" opacity="0.95">G</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VALUES ═══ -->
+<section id="values">
+  <div class="section-inner">
+    <p class="section-label">What we stand for</p>
+    <h2 class="section-title">The Pillars of<br/>Gandhi House</h2>
+    <p class="section-sub">Named after one of history's most courageous minds, we carry forward the spirit of peaceful strength, creative courage, and unity.</p>
+    <div class="values-grid" id="valuesGrid"></div>
+  </div>
+</section>
+
+<!-- ═══ MEMBERS ═══ -->
+<section id="members">
+  <div class="section-inner">
+    <div class="members-header">
+      <div>
+        <p class="section-label">The house</p>
+        <h2 class="section-title">Our Members</h2>
+      </div>
+    </div>
+    <div class="members-grid" id="membersGrid"></div>
+  </div>
+</section>
+
+<!-- ═══ WORKS ═══ -->
+<section id="works">
+  <div class="section-inner">
+    <div class="works-intro">
+      <div>
+        <p class="section-label">Creative output</p>
+        <h2 class="section-title">Works &amp;<br/>Publications</h2>
+        <p class="section-sub">Short stories, poems, songs, essays, and mystery ARGs — the creative soul of Gandhi House.</p>
+      </div>
+      <div>
+        <div class="works-filter" id="worksFilter"></div>
+      </div>
+    </div>
+    <div class="works-grid" id="worksGrid"></div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-left">
+        <p class="section-label">About us</p>
+        <h2 class="section-title">Gandhi House,<br/>VWMS</h2>
+        <div class="about-stat-stack">
+          <div class="about-stat"><div class="about-stat-num">4</div><div class="about-stat-label">House pillars: Courage, Unity,<br/>Creativity, Integrity</div></div>
+          <div class="about-stat"><div class="about-stat-num">⚡</div><div class="about-stat-label">Active across Sports, Arts,<br/>Academics &amp; Culture</div></div>
+          <div class="about-stat"><div class="about-stat-num">v3</div><div class="about-stat-label">Official site — dynamic &amp; growing.<br/>2026.</div></div>
+        </div>
+      </div>
+      <div class="about-right">
+        <blockquote class="about-quote">
+          "Be the change you wish to see in the world."
+          <cite>— Mahatma Gandhi</cite>
+        </blockquote>
+        <p class="about-body">Gandhi House is one of VWMS's founding houses, named for one of history's great figures — a man who proved that quiet conviction can move mountains. We carry that name seriously.</p>
+        <p class="about-body">We compete hard in every event, but what sets us apart is what happens off the scoreboard: the stories written at midnight, the songs composed for Sports Day, the ARGs that keep classmates up solving ciphers. We are athletes, writers, musicians, and mystery-makers.</p>
+        <p class="about-body">This site is our home. It will grow as we grow.</p>
+        <div class="about-moderator">
+          <div class="mod-avatar">M</div>
+          <div>
+            <div class="mod-label">House Moderator</div>
+            <div class="mod-name">[Moderator Name]</div>
+            <div class="mod-email">update-this@school.edu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">Gandhi House · VWMS</span>
+  <div class="footer-links">
+    <a href="#home">Home</a><a href="#values">Values</a>
+    <a href="#members">Members</a><a href="#works">Works</a><a href="#about">About</a>
+  </div>
+  <span class="footer-copy">© 2026 Gandhi House · Official Site v3</span>
+</footer>
+
+<!-- ═══ PANELS ═══ -->
+<div class="panel-overlay" id="overlay"></div>
+<div class="panel" id="workPanel" role="dialog" aria-modal="true" aria-label="Work viewer">
+  <div class="panel-close"><button class="panel-close-btn" onclick="closePanel()">✕ Close</button></div>
+  <div id="workPanelContent"></div>
+</div>
+<div class="panel" id="memberPanel" role="dialog" aria-modal="true" aria-label="Member profile">
+  <div class="panel-close"><button class="panel-close-btn" onclick="closePanel()">✕ Close</button></div>
+  <div id="memberPanelContent"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   ██████╗  █████╗ ████████╗ █████╗
+   ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+   ██║  ██║███████║   ██║   ███████║
+   ██║  ██║██╔══██║   ██║   ██╔══██║
+   ██████╔╝██║  ██║   ██║   ██║  ██║
+   ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+
+   TO ADD A NEW WORK — add one object to WORKS below.
+   TO ADD A NEW MEMBER — add one object to MEMBERS below.
+   TO EDIT VALUES — edit the HOUSE_VALUES array below.
+   That's it. The rest is automatic.
+═══════════════════════════════════════════════════ */
+
+// ─────────────────────────────────────────────────
+//  HOUSE VALUES
+//  Fields: icon, title, body
+// ─────────────────────────────────────────────────
+const HOUSE_VALUES = [
+  {
+    icon: "☀️",
+    title: "Courage",
+    body: "We speak up, stand firm, and face challenges without flinching — on the field, in the classroom, and on the page."
+  },
+  {
+    icon: "🤝",
+    title: "Unity",
+    body: "Every year level, every personality, every talent — woven into one house. We are stronger together than apart."
+  },
+  {
+    icon: "✍️",
+    title: "Creativity",
+    body: "We write stories, compose songs, craft poems, and build worlds. Our imagination is as fierce as our competitive spirit."
+  },
+  {
+    icon: "⚖️",
+    title: "Integrity",
+    body: "Named for Gandhi, we compete with honour. Win fairly, lose gracefully, and always leave a place better than you found it."
+  },
+  {
+    icon: "🔍",
+    title: "Curiosity",
+    body: "We ask questions others don't. Whether it's cracking an ARG at midnight or researching an essay at dawn — we dig deeper."
+  },
+  {
+    icon: "🏆",
+    title: "Legacy",
+    body: "The students who come after us will know our name. What we build here — victories, words, friendships — outlasts us."
+  }
+];
+
+// ─────────────────────────────────────────────────
+//  MEMBERS
+//  Fields: name, role, bio, works (array of work titles they authored)
+//  'works' links automatically to matching entries in WORKS below.
+// ─────────────────────────────────────────────────
+const MEMBERS = [
+  {
+    name: "House Captain",
+    role: "Leadership",
+    bio: "Update this bio with something about this person — their year level, what they bring to the house, and what makes them Gandhi through and through.",
+    works: []
+  },
+  {
+    name: "Vice Captain",
+    role: "Leadership",
+    bio: "Update this bio with something about this person — their strengths, their story, their role in keeping Gandhi House together.",
+    works: []
+  },
+  {
+    name: "Member Name",
+    role: "Writer · Poet",
+    bio: "Replace with a real member. Add their name, what they do, and link their works by matching the title to a work in the WORKS array.",
+    works: ["The Last Lantern", "Yellow is Not Surrender"]
+  },
+  {
+    name: "Member Name",
+    role: "ARG Maker",
+    bio: "Replace with a real member. The mastermind behind the house's mystery ARG. Ask them nothing. They'll tell you everything — eventually.",
+    works: ["Project: Goldfinch"]
+  },
+  {
+    name: "Member Name",
+    role: "Songwriter",
+    bio: "Replace with a real member. Wrote the Sports Day anthem from scratch. If you've heard it, you know.",
+    works: ["Anthem (We Don't Fall)"]
+  },
+  {
+    name: "Member Name",
+    role: "Competitor · Writer",
+    bio: "Replace with a real member. Equally dangerous in a sprint and in an essay. One of Gandhi House's most versatile members.",
+    works: ["On Disobedience & Honour"]
+  }
+];
+
+// ─────────────────────────────────────────────────
+//  WORKS
+//  Fields: type, title, author, excerpt, date, content
+//  type options: "Story" | "Poem" | "Song" | "ARG" | "Essay"
+//  content: the full text shown in the reading panel.
+//           Use \n for line breaks. For ARGs, use the arg style.
+// ─────────────────────────────────────────────────
+const WORKS = [
+  {
+    type: "Story",
+    title: "The Last Lantern",
+    author: "Member Name · Form [X]",
+    date: "2026",
+    excerpt: "A watchman in a city that forgot how to sleep. When the last lantern goes out, he must decide what's worth keeping in the dark…",
+    content: `Replace this with the full text of the story.\n\nThis is where the complete piece goes — paragraphs separated by blank lines.\n\nThe whole thing will render here in the reading panel, beautifully formatted, ready for anyone who clicks through.\n\n— [Author Name]`
+  },
+  {
+    type: "Poem",
+    title: "Yellow is Not Surrender",
+    author: "Member Name · Form [X]",
+    date: "2026",
+    excerpt: "People mistake yellow for caution, for warning, for fear. They forget: the sun is yellow, and nothing burns brighter.",
+    content: `Replace this with the full poem.\n\nEach stanza on its own line.\nLine breaks preserved exactly as you write them.\n\nYellow is not surrender.\nYellow is the sun.\n\n— [Author Name]`
+  },
+  {
+    type: "ARG",
+    title: "Project: Goldfinch",
+    author: "The ARG Team · Ongoing",
+    date: "2026",
+    excerpt: "Something is hidden in Room 7B. A cipher, three QR codes, and a note that shouldn't exist. Are you paying attention?",
+    content: `> INITIALISING GOLDFINCH PROTOCOL...\n> ACCESS GRANTED: LEVEL 1\n\nReplace this with your ARG's opening text, clues, or lore.\n\nYou can write in any format — cryptic messages, coordinates, cipher hints, story fragments.\n\nThe red terminal font and glitch effect will make it feel right.\n\n> CONTINUE? [Y/N]_`
+  },
+  {
+    type: "Song",
+    title: "Anthem (We Don't Fall)",
+    author: "Member Name · Form [X]",
+    date: "Sports Day 2025",
+    excerpt: "Written for Sports Day 2025. Three verses, one bridge, and a chorus that the whole house ended up knowing by heart.",
+    content: `Replace this with the full song lyrics.\n\n[Verse 1]\nYour lyrics here.\n\n[Chorus]\nWe don't fall, we don't fall,\nYellow and black, we stand tall.\n\n[Verse 2]\nYour lyrics here.\n\n[Bridge]\nYour lyrics here.\n\n— [Author Name]`
+  },
+  {
+    type: "Essay",
+    title: "On Disobedience & Honour",
+    author: "Member Name · Form [X]",
+    date: "2026",
+    excerpt: "Gandhi broke laws. So did Mandela. So did Malala. This essay asks: when is breaking the rule the most honourable thing you can do?",
+    content: `Replace this with the full essay text.\n\nIntroduction paragraph goes here. State your argument clearly.\n\nBody paragraph one. Evidence and analysis.\n\nBody paragraph two. Counter-argument and rebuttal.\n\nConclusion. Bring it home.\n\n— [Author Name]`
+  }
+];
+
+/* ═══════════════════════════════════════════════════
+   RENDERING — you don't need to touch anything below
+═══════════════════════════════════════════════════ */
+
+const TYPE_TAG = {
+  Story: "tag-story", Poem: "tag-poem", Song: "tag-song", ARG: "tag-arg", Essay: "tag-essay"
+};
+const TYPE_LABEL = {
+  Story: "Short Story", Poem: "Poem", Song: "Song", ARG: "ARG", Essay: "Essay"
+};
+const READ_LABEL = {
+  Story: "Read →", Poem: "Read →", Song: "Read →", ARG: "Enter →", Essay: "Read →"
+};
+
+// ── Values
+function renderValues() {
+  const grid = document.getElementById('valuesGrid');
+  grid.innerHTML = HOUSE_VALUES.map(v => `
+    <div class="value-card">
+      <span class="value-icon">${v.icon}</span>
+      <h3>${v.title}</h3>
+      <p>${v.body}</p>
+    </div>
+  `).join('');
+}
+
+// ── Members
+function renderMembers() {
+  const grid = document.getElementById('membersGrid');
+  grid.innerHTML = MEMBERS.map((m, i) => `
+    <div class="member-card" onclick="openMemberPanel(${i})" tabindex="0" role="button" aria-label="View ${m.name}'s profile">
+      <div class="member-avatar">${m.name.trim()[0].toUpperCase()}</div>
+      <div class="member-name">${m.name}</div>
+      <div class="member-role">${m.role}</div>
+      <div class="member-card-hint">Click to view profile →</div>
+    </div>
+  `).join('') + `
+    <div class="member-card member-add" style="cursor:default;">
+      <span style="font-size:1.4rem;color:var(--border);line-height:1;">+</span>
+      <p style="font-size:0.72rem;color:var(--slate);text-align:center;line-height:1.5;">Add members<br/>in the JS data</p>
+    </div>
+  `;
+}
+
+// ── Works filter + grid
+let activeFilter = "All";
+const ALL_TYPES = ["All", ...new Set(WORKS.map(w => w.type))];
+
+function renderWorksFilter() {
+  const f = document.getElementById('worksFilter');
+  f.innerHTML = ALL_TYPES.map(t => `
+    <button class="filter-btn${t === activeFilter ? ' active' : ''}" onclick="setFilter('${t}')">${t === 'All' ? 'All' : TYPE_LABEL[t] || t}</button>
+  `).join('');
+}
+
+function setFilter(type) {
+  activeFilter = type;
+  renderWorksFilter();
+  renderWorksGrid();
+}
+
+function renderWorksGrid() {
+  const grid = document.getElementById('worksGrid');
+  const filtered = activeFilter === "All" ? WORKS : WORKS.filter(w => w.type === activeFilter);
+  grid.innerHTML = filtered.map((w, i) => {
+    const realIdx = WORKS.indexOf(w);
+    const isArg = w.type === "ARG";
+    return `
+      <div class="work-card${isArg ? ' arg-card' : ''}" onclick="openWorkPanel(${realIdx})" tabindex="0" role="button" aria-label="Open ${w.title}">
+        <span class="work-tag ${TYPE_TAG[w.type] || ''}">${TYPE_LABEL[w.type] || w.type}</span>
+        <div class="work-title">${w.title}</div>
+        <div class="work-author">by ${w.author}</div>
+        <p class="work-excerpt">${w.excerpt}</p>
+        ${isArg ? `<div class="arg-glitch">ERROR: FILE CORRUPTED — CONTINUE? [Y/N]</div>` : ''}
+        <div class="work-footer">
+          <span>${w.date}</span>
+          <span class="work-read">${READ_LABEL[w.type] || 'Read →'}</span>
+        </div>
+      </div>
+    `;
+  }).join('') + `
+    <div class="work-card work-submit">
+      <div>
+        <p>Have a story, poem, song or ARG?</p>
+        <p><strong>Submit to the House Moderator</strong> to be published here.</p>
+      </div>
+    </div>
+  `;
+}
+
+// ── Work panel
+function openWorkPanel(idx) {
+  const w = WORKS[idx];
+  const isArg = w.type === "ARG";
+  document.getElementById('workPanelContent').innerHTML = `
+    <span class="panel-tag ${TYPE_TAG[w.type] || ''}">${TYPE_LABEL[w.type] || w.type}</span>
+    <div class="panel-title">${w.title}</div>
+    <div class="panel-author">by ${w.author} · ${w.date}</div>
+    <div class="panel-body${isArg ? ' arg-body' : ''}">${w.content.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+  `;
+  openPanel('workPanel');
+}
+
+// ── Member panel
+function openMemberPanel(idx) {
+  const m = MEMBERS[idx];
+  const memberWorks = WORKS.filter(w => m.works.includes(w.title));
+  const worksHtml = memberWorks.length ? `
+    <div class="member-panel-works">
+      <h4>Works by ${m.name.split(' ')[0]}</h4>
+      ${memberWorks.map(w => {
+        const wi = WORKS.indexOf(w);
+        return `<div class="member-work-link" onclick="switchToWork(${wi})" tabindex="0" role="button">
+          ${w.title} <span>${TYPE_LABEL[w.type] || w.type}</span>
+        </div>`;
+      }).join('')}
+    </div>
+  ` : '';
+
+  document.getElementById('memberPanelContent').innerHTML = `
+    <div class="member-panel-header">
+      <div class="member-panel-avatar">${m.name.trim()[0].toUpperCase()}</div>
+      <div>
+        <div class="member-panel-name">${m.name}</div>
+        <div class="member-panel-role">${m.role}</div>
+      </div>
+    </div>
+    <p class="member-panel-bio">${m.bio}</p>
+    ${worksHtml}
+  `;
+  openPanel('memberPanel');
+}
+
+// switch from member panel directly to a work
+function switchToWork(idx) {
+  closePanel();
+  setTimeout(() => openWorkPanel(idx), 100);
+}
+
+// ── Panel open / close
+function openPanel(id) {
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePanel() {
+  document.getElementById('overlay').classList.remove('open');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('open'));
+  document.body.style.overflow = '';
+}
+
+// keyboard close + overlay click
+document.getElementById('overlay').addEventListener('click', closePanel);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+// keyboard open for cards
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.getAttribute('role') === 'button') {
+    e.target.click();
+  }
+});
+
+// ── INIT
+renderValues();
+renderMembers();
+renderWorksFilter();
+renderWorksGrid();
+</script>
+</body>
+</html>
