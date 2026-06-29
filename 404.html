@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 — Gandhi House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow:  #F5C200;
+      --black:   #0D0D0D;
+      --card:    #161616;
+      --cream:   #F5F0E8;
+      --slate:   #8A8A8A;
+      --border:  rgba(245,194,0,0.18);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .watermark {
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16rem, 30vw, 40rem);
+      font-weight: 700;
+      color: var(--yellow);
+      opacity: 0.03;
+      pointer-events: none;
+      user-select: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .container {
+      text-align: center;
+      z-index: 1;
+      padding: 2rem;
+      max-width: 600px;
+    }
+    .glitch-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(6rem, 12vw, 10rem);
+      font-weight: 700;
+      color: var(--yellow);
+      line-height: 1;
+      animation: glitchNum 5s ease-in-out infinite;
+    }
+    @keyframes glitchNum {
+      0%, 90%, 100% { transform: translate(0); }
+      92% { transform: translate(-3px, 2px); }
+      94% { transform: translate(3px, -1px); }
+      96% { transform: translate(0); }
+    }
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--slate);
+      margin: 0.5rem 0 2rem;
+      font-weight: 400;
+    }
+    .message {
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .message strong { color: var(--yellow); font-weight: 600; }
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary { background: var(--yellow); color: var(--black); }
+    .btn-primary:hover { background: #ffd740; }
+    .btn-ghost { border: 1px solid var(--border); color: rgba(245,240,232,0.6); background: transparent; }
+    .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+
+    .cipher-hint {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .cipher-label {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-bottom: 0.6rem;
+    }
+    .cipher-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: rgba(248,113,113,0.7);
+      letter-spacing: 0.05em;
+      animation: glitch 4s ease-in-out infinite;
+    }
+    @keyframes glitch {
+      0%, 90%, 100% { opacity: 0.6; letter-spacing: 0.05em; }
+      92% { opacity: 1; letter-spacing: 0.15em; color: #f87171; }
+      94% { opacity: 0.3; letter-spacing: 0; }
+      96% { opacity: 1; }
+    }
+    .footer-msg {
+      margin-top: 3rem;
+      font-size: 0.65rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="watermark" aria-hidden="true">404</div>
+  <div class="container">
+    <div class="glitch-num">404</div>
+    <p class="tagline">You've wandered into uncharted territory.</p>
+    <p class="message">
+      This page doesn't exist <strong>...yet.</strong><br/>
+      Maybe it never will. Maybe it's waiting to be written.<br/>
+      Either way — you're not supposed to be here.
+    </p>
+    <div class="btn-row">
+      <a href="index.html" class="btn btn-primary">← Back to Home</a>
+      <a href="index.html#works" class="btn btn-ghost">Browse Works</a>
+    </div>
+    <div class="cipher-hint">
+      <p class="cipher-label">⏤ System Message</p>
+      <p class="cipher-text">> ERROR: PATH NOT FOUND<br/>> TRACE: /unknown — no records match<br/>> If you believe this is a mistake, it probably isn't.<br/>> But keep looking. Always keep looking.</p>
+    </div>
+    <p class="footer-msg">Gandhi House · VWMS · Est. 2024</p>
+  </div>
+</body>
+</html>

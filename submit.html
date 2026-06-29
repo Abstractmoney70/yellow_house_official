@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit Work — Gandhi House</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow: #F5C200; --black: #0D0D0D; --card: #161616;
+      --cream: #F5F0E8; --slate: #8A8A8A; --border: rgba(245,194,0,0.18);
+    }
+    body {
+      font-family: 'Inter', sans-serif; background: var(--black); color: var(--cream);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+    }
+    .container { max-width: 640px; width: 100%; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.7rem; color: var(--slate); text-decoration: none;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--yellow); }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 0.85rem; color: var(--slate); margin-bottom: 2.5rem; line-height: 1.6;
+    }
+    .form-group { margin-bottom: 1.4rem; }
+    label {
+      display: block; font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--yellow); margin-bottom: 0.4rem;
+    }
+    input, select, textarea {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      color: var(--cream); padding: 0.7rem 1rem;
+      font-family: 'Inter', sans-serif; font-size: 0.85rem;
+      outline: none; transition: border-color 0.2s; resize: vertical;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--yellow); }
+    select { appearance: none; cursor: pointer; }
+    select option { background: var(--card); color: var(--cream); }
+    textarea { min-height: 200px; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.7; }
+    .hint { font-size: 0.65rem; color: var(--slate); margin-top: 0.3rem; }
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+    .btn {
+      padding: 0.75rem 1.8rem; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px;
+      cursor: pointer; border: none; transition: all 0.2s; text-decoration: none;
+      display: inline-block; text-align: center;
+    }
+    .btn-primary { background: var(--yellow); color: var(--black); }
+    .btn-primary:hover { background: #ffd740; }
+    .btn-ghost { border: 1px solid var(--border); color: var(--slate); background: transparent; }
+    .btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+    .output-box {
+      margin-top: 2rem; background: var(--card); border: 1px solid var(--border);
+      padding: 1.5rem; display: none;
+    }
+    .output-box.visible { display: block; }
+    .output-label {
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--yellow); margin-bottom: 0.8rem;
+    }
+    .output-code {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      color: var(--cream); background: #0a0a0a; padding: 1.2rem;
+      border: 1px solid var(--border); white-space: pre-wrap;
+      line-height: 1.6; max-height: 300px; overflow-y: auto;
+      user-select: all;
+    }
+    .copy-btn {
+      margin-top: 0.8rem; padding: 0.5rem 1.2rem; font-size: 0.65rem;
+      font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      background: transparent; border: 1px solid var(--border); color: var(--slate);
+      cursor: pointer; border-radius: 2px; transition: all 0.2s;
+    }
+    .copy-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+    .copy-btn.copied { border-color: #34d399; color: #34d399; }
+    .footer-msg {
+      margin-top: 3rem; text-align: center; font-size: 0.65rem; color: #333;
+    }
+    @media (max-width: 500px) {
+      body { padding: 1rem; }
+      .btn-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="back-link">← Back to Home</a>
+  <h1>Submit Your Work</h1>
+  <p class="subtitle">
+    Write a story, poem, song, essay, blogpost, or ARG. Fill out the form below,
+    then copy the generated code and send it to a House Moderator — or open a
+    Pull Request on GitHub.
+  </p>
+
+  <div class="form-group">
+    <label for="workType">Type</label>
+    <select id="workType">
+      <option value="Poem">Poem</option>
+      <option value="Story">Story</option>
+      <option value="Song">Song</option>
+      <option value="Essay">Essay</option>
+      <option value="Blogpost">Blogpost</option>
+      <option value="ARG">ARG</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="workTitle">Title</label>
+    <input type="text" id="workTitle" placeholder="Your work's title...">
+  </div>
+
+  <div class="form-group">
+    <label for="workAuthor">Author Name</label>
+    <input type="text" id="workAuthor" placeholder="Your name as you want it displayed...">
+  </div>
+
+  <div class="form-group">
+    <label for="workDate">Date</label>
+    <input type="text" id="workDate" placeholder="e.g. Jul 1, 2026 or 2026">
+  </div>
+
+  <div class="form-group">
+    <label for="workExcerpt">Excerpt / Summary</label>
+    <input type="text" id="workExcerpt" placeholder="One sentence that appears on the card...">
+    <span class="hint">This shows up in the works grid as a preview.</span>
+  </div>
+
+  <div class="form-group">
+    <label for="workContent">Full Content</label>
+    <textarea id="workContent" placeholder="Write your full work here...&#10;&#10;Use Enter for line breaks — the generator will convert them to \n for you.&#10;&#10;— Author Name"></textarea>
+    <span class="hint">Line breaks will be automatically converted. Write naturally.</span>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="generateCode()">Generate Code</button>
+    <button class="btn btn-ghost" onclick="clearForm()">Clear Form</button>
+  </div>
+
+  <div class="output-box" id="outputBox">
+    <p class="output-label">📋 Copy this into js/data.js (WORKS array)</p>
+    <div class="output-code" id="outputCode"></div>
+    <button class="copy-btn" id="copyBtn" onclick="copyOutput()">📋 Copy to Clipboard</button>
+  </div>
+
+  <p class="footer-msg">
+    After copying, send this to your House Moderator or open a Pull Request on GitHub.<br/>
+    Your work will be reviewed and published within 48 hours.
+  </p>
+</div>
+
+<script>
+  function escapeForTemplate(str) {
+    return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+  }
+
+  function generateCode() {
+    const type = document.getElementById('workType').value;
+    const title = document.getElementById('workTitle').value.trim();
+    const author = document.getElementById('workAuthor').value.trim();
+    const date = document.getElementById('workDate').value.trim();
+    const excerpt = document.getElementById('workExcerpt').value.trim();
+    const contentRaw = document.getElementById('workContent').value;
+
+    if (!title || !author || !contentRaw) {
+      alert('Please fill in at least: Title, Author, and Content.');
+      return;
+    }
+
+    const contentLines = contentRaw.split('\n');
+    const contentEscaped = contentLines.map(line => escapeForTemplate(line)).join('\\n');
+
+    const code = 
+`{
+  type: "${type}",
+  title: "${escapeForTemplate(title)}",
+  author: "${escapeForTemplate(author)}",
+  date: "${escapeForTemplate(date || '2026')}",
+  excerpt: "${escapeForTemplate(excerpt || 'A work by ' + author + '.')}",
+  content: \`${contentEscaped}\`
+},`;
+
+    document.getElementById('outputCode').textContent = code;
+    document.getElementById('outputBox').classList.add('visible');
+    document.getElementById('outputBox').scrollIntoView({ behavior: 'smooth' });
+
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.textContent = '📋 Copy to Clipboard';
+    copyBtn.classList.remove('copied');
+  }
+
+  function copyOutput() {
+    const code = document.getElementById('outputCode').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 Copy to Clipboard';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      alert('Could not copy automatically. Please select and copy the text manually.');
+    });
+  }
+
+  function clearForm() {
+    document.getElementById('workTitle').value = '';
+    document.getElementById('workAuthor').value = '';
+    document.getElementById('workDate').value = '';
+    document.getElementById('workExcerpt').value = '';
+    document.getElementById('workContent').value = '';
+    document.getElementById('outputBox').classList.remove('visible');
+  }
+</script>
+</body>
+</html>

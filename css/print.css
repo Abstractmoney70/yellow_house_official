@@ -1,0 +1,151 @@
+/* ══════════════════════════════════════
+   PRINT.CSS — clean printed versions
+   Loaded via media="print" in index.html
+══════════════════════════════════════ */
+
+@media print {
+  /* Hide everything non-essential */
+  nav,
+  .ticker,
+  #home,
+  #values,
+  #members,
+  #about,
+  footer,
+  .panel-overlay,
+  .reading-progress,
+  .back-to-top,
+  .reading-share-btn,
+  .reading-close-btn,
+  .reading-top-bar,
+  .btn,
+  .hero-cta,
+  .works-filter,
+  .search-wrap,
+  .load-more-wrap,
+  .work-submit,
+  .member-card-hint,
+  .arg-glitch {
+    display: none !important;
+  }
+
+  /* Full-width reading panel */
+  .panel {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    background: white !important;
+    overflow: visible !important;
+    border: none !important;
+  }
+
+  .panel-overlay {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+    overflow: visible !important;
+  }
+
+  .reading-layout {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .reading-body {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+    font-size: 12pt !important;
+    line-height: 1.6 !important;
+    color: black !important;
+  }
+
+  .reading-body.arg-body,
+  .reading-body.blog-body {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+    color: black !important;
+  }
+
+  .reading-title {
+    font-size: 20pt !important;
+    color: black !important;
+  }
+
+  .reading-author {
+    color: #333 !important;
+  }
+
+  .reading-date,
+  .reading-time {
+    color: #666 !important;
+  }
+
+  .reading-meta {
+    border-bottom: 1px solid #ccc !important;
+  }
+
+  .reading-type-badge {
+    border: 1px solid #999 !important;
+    color: #333 !important;
+    background: none !important;
+  }
+
+  .reading-related {
+    border-top: 1px solid #ccc !important;
+  }
+
+  .reading-related h3 {
+    color: black !important;
+  }
+
+  .related-card {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+  }
+
+  .related-card .work-title {
+    color: black !important;
+  }
+
+  .related-card .work-author {
+    color: #555 !important;
+  }
+
+  /* Works grid — show as list */
+  .works-grid {
+    display: block !important;
+    background: none !important;
+  }
+
+  .work-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background: none !important;
+    border-bottom: 1px solid #ccc !important;
+    padding: 0.8rem 0 !important;
+    color: black !important;
+  }
+
+  .work-title {
+    color: black !important;
+    font-size: 1rem !important;
+  }
+
+  .work-author,
+  .work-excerpt,
+  .work-footer {
+    color: #555 !important;
+  }
+
+  .work-tag {
+    border: 1px solid #999 !important;
+    color: #333 !important;
+    background: none !important;
+  }
+
+  @page {
+    margin: 2cm;
+  }
+}
