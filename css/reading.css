@@ -81,13 +81,21 @@
 .related-card .work-title { font-size:1.05rem; margin-bottom:0.3rem; }
 .related-card .work-author { font-size:0.68rem; margin-bottom:0; }
 
-@media (max-width:860px) {
-  .reading-layout { padding:3rem 1.5rem 3rem; }
-  .reading-top-bar { padding:1rem 1.5rem 1.2rem; }
-  .related-grid { grid-template-columns:1fr 1fr; }
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+
+@media (max-width: 860px) {
+  .reading-layout { padding: 2rem 1rem 3rem; }
+  .reading-top-bar { padding: 0.8rem 1rem 1rem; max-width: 100%; }
+  .reading-title { font-size: clamp(1.8rem, 6vw, 2.4rem); }
+  .reading-body { font-size: 1.1rem; line-height: 1.8; }
+  .reading-meta { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .related-grid { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width:580px) {
-  .related-grid { grid-template-columns:1fr; }
-  .reading-body { font-size:1.1rem; }
-  .reading-title { font-size:2rem; }
+
+@media (max-width: 580px) {
+  .related-grid { grid-template-columns: 1fr; }
+  .reading-body { font-size: 1.05rem; }
+  .reading-title { font-size: 1.8rem; }
 }
