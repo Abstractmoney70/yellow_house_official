@@ -62,9 +62,13 @@ const MEMBERS = [
   },
   {
     name: "Bravian Ghosh",
-    role: "Writer · Poet",
-    bio: "A wordsmith who finds rhythm in the everyday. Bravian writes with heart — turning gratitude, frustration, and quiet moments into something that lingers.",
-    works: ["Missed Appointment"]
+    role: "Writer · Poet · Site Architect",
+    bio: "The mind behind the Gandhi House website and its first published author. Writes poetry about the people society forgets, essays about mathematics and meaning, and the occasional deep-dive into quotes we've been misattributing for decades. Built this entire platform in an afternoon because the house needed a home. It worked.",
+    works: [
+      "Missed Appointment",
+      "The Simplest Problem Nobody Can Solve: A Deep Dive into the Collatz Conjecture",
+      "Quote of the Day #1: 'Be the change you wish to see in the world'"
+    ]
   },
   {
     name: "Member Name",
@@ -154,12 +158,34 @@ That's worth caring about.
 — Bravian Ghosh`
   },
   {
-    type: "Poem",
-    title: "Yellow is Not Surrender",
-    author: "Member Name",
-    date: "2026",
-    excerpt: "People mistake yellow for caution, for warning, for fear. They forget: the sun is yellow, and nothing burns brighter.",
-    content: `Replace this with the full poem.\n\nEach stanza on its own line.\nLine breaks preserved exactly as you write them.\n\nYellow is not surrender.\nYellow is the sun.\n\n— [Author Name]`
+    type: "Essay",
+    title: "Quote of the Day #1: 'Be the change you wish to see in the world'",
+    author: "Bravian Ghosh",
+    date: "Jul 1, 2026",
+    excerpt: "Gandhi's most famous quote opens our house page. But did he actually say it? And what does it really ask of us?",
+    content: `There is no better place to start this series than with the quote that sits at the heart of our house: "Be the change you wish to see in the world."
+
+It's attributed to Mahatma Gandhi. It opens our About section. It's printed on posters, stitched into Instagram bios, and dropped into speeches by people who've never read a page of Gandhi's writing.
+
+But here's the uncomfortable truth: Gandhi probably never said it.
+
+Not those exact words, anyway. The closest documented statement comes from a 1913 journal entry where he wrote: "We but mirror the world. All the tendencies present in the outer world are to be found in this world of ours. If we could change ourselves, the tendencies in the world would also change."
+
+Later, in a 1946 interview, he reportedly said: "If you want to change the world, start with yourself."
+
+The pithy version we know today — "Be the change you wish to see in the world" — appears nowhere in his collected works. It was likely a paraphrase coined by educators and activists in the decades after his death, compressing his philosophy into a single, portable, unforgettable sentence.
+
+And honestly? That compression is its own kind of brilliance. Because even if the words aren't verbatim Gandhi, the idea is what Gandhi idealized.
+
+What the quote actually asks of us is far harder than sharing a post or nodding along. It asks us to embody the world we want before we demand it from others. Want peace? Be peaceful in your arguments. Want honesty? Stop exaggerating your achievements. Want a house that values creativity? Write something. Publish it. Build the platform yourself.
+
+The quote isn't a call to preach. It's a call to become. To be the first example, not the loudest critic.
+
+That's why we put it on our site. Not as decoration. As a reminder that Gandhi House isn't named for a man we admire from a distance. It's named for a standard we're supposed to live up to.
+
+Start with yourself. The rest follows.
+
+— Bravian Ghosh`
   },
   {
     type: "ARG",
