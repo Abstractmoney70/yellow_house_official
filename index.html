@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="css/main.css"/>
   <link rel="stylesheet" href="css/print.css" media="print"/>
   <link rel="stylesheet" href="css/reading.css"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#F5C200"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Gandhi House"/>
 </head>
 <body>
 
@@ -19,15 +24,26 @@
     <span class="nav-house">Gandhi House</span>
     <span class="nav-school">VWMS</span>
   </div>
-  <div class="nav-links">
-    <a href="#home">Home</a>
-    <a href="#values">Values</a>
-    <a href="#members">Members</a>
-    <a href="#works">Works</a>
-    <a href="#about">About</a>
-    <a href="submit.html">Submit</a>
+  <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#home" onclick="closeMobileMenu()">Home</a>
+    <a href="#values" onclick="closeMobileMenu()">Values</a>
+    <a href="#members" onclick="closeMobileMenu()">Members</a>
+    <a href="#works" onclick="closeMobileMenu()">Works</a>
+    <a href="#about" onclick="closeMobileMenu()">About</a>
+    <a href="submit.html" onclick="closeMobileMenu()">Submit</a>
   </div>
 </nav>
+
+<!-- MOBILE BOTTOM BAR -->
+<div class="bottom-bar" id="bottomBar">
+  <a href="#home" class="bottom-bar-item">🏠<span>Home</span></a>
+  <a href="#works" class="bottom-bar-item">📚<span>Works</span></a>
+  <a href="submit.html" class="bottom-bar-item">✍️<span>Submit</span></a>
+  <button class="bottom-bar-item" onclick="toggleMobileMenu()">☰<span>Menu</span></button>
+</div>
 
 <!-- TICKER -->
 <div class="ticker" aria-hidden="true">
@@ -219,5 +235,11 @@
 <script src="js/features.js"></script>
 <script src="js/main.js"></script>
 
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+  
 </body>
 </html>
