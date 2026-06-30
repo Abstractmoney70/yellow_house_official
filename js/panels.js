@@ -145,6 +145,7 @@ function openPanel(id) {
 }
 
 function closePanel() {
+  closeMobileMenu(); 
   const overlay = document.getElementById('overlay');
   const progress = document.getElementById('readingProgress');
   const backBtn = document.getElementById('backToTop');
