@@ -71,3 +71,27 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+
+// ── Mobile menu ──
+function toggleMobileMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburgerBtn');
+  if (nav) nav.classList.toggle('open');
+  if (btn) btn.classList.toggle('open');
+}
+
+function closeMobileMenu() {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburgerBtn');
+  if (nav) nav.classList.remove('open');
+  if (btn) btn.classList.remove('open');
+}
+
+// Close mobile menu when clicking overlay
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('hamburgerBtn');
+  if (nav && nav.classList.contains('open') && !nav.contains(e.target) && !btn.contains(e.target)) {
+    closeMobileMenu();
+  }
+});
