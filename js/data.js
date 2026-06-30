@@ -98,11 +98,60 @@ const WORKS = [
   },
   {
     type: "Blogpost",
-    title: "First Week in Gandhi House",
-    author: "Member Name",
-    date: "Apr 2026",
-    excerpt: "Reflections on the first week — the chaos, the chants, and the unexpected kindness of yellow and black.",
-    content: `Replace this with your blogpost.\n\nBlogposts are casual, journal-style entries. They use a clean sans-serif font and feel more personal.\n\nWrite about house events, personal reflections, match reports, creative processes — anything goes.\n\n— [Author Name]`
+    title: "The Simplest Problem Nobody Can Solve: A Deep Dive into the Collatz Conjecture",
+    author: "Bravian Ghosh",
+    date: "Jul 1, 2026",
+    excerpt: "A theory that's simple enough for a toddler to grasp, yet virtually impossible for mathematicians to prove; take a look into the most confusing problem to have ever scratched mathematics.",
+    content: `Pick a number. Any number. Doesn't matter which one. Could be 7. Could be 42 (The NUMBER). Could be something obnoxious like 1,029. Could be your birthday, your roll number, whatever.
+
+Now follow two rules:
+
+If it's even: n/2.
+If it's odd: 3n + 1.
+
+Take the result and do it again. And again. And again.
+
+That's it. The 'Unsolvable Problem.'
+
+Start with 6. 6 is even, so n/2 gives you 3. 3 is odd, so 3n + 1 gives you 10. 10 → 5. 5 → 16. 16 → 8 → 4 → 2 → 1.
+
+Once you hit 1, you're trapped: 1 is odd, so 3(1) + 1 = 4. 4 → 2 → 1 → 4 → 2 → 1... a perfect little loop that never lets go.
+
+This is the Collatz Conjecture. Lothar Collatz, a German mathematician, proposed it in 1937. The idea is simple: every positive integer, no matter what you start with, eventually tumbles down to 1.
+
+Sounds pretty fun & easy, right huh?
+
+It's not. It has never been proven. Not because we didn't care to prove it. Computers have checked every number up to roughly 2^68; that's about 295 quintillion, that's close to how many atoms are there in the human body! and every single one eventually hits the 4-2-1 loop. But finding patterns and eventually results isn't proving in the traditional sense. There could be some ridiculous number out there, unimaginably large, that either spirals off to infinity or gets caught in a completely different loop nobody's seen yet.
+
+Why hasn't anyone cracked it?
+
+Part of what makes Collatz so tricky is the interplay between n/2 and 3n + 1. n/2 shrinks numbers. 3n + 1 grows them. The sequence bounces between the two operations in a way that feels almost random; mathematicians call these "hailstone sequences" because the numbers rise and fall like hailstones in a storm cloud before eventually crashing down to earth.
+
+But there's a mathematical anchor buried in all this chaos. A universal law that keeps the sequence from spiraling out of control:
+
+odd × odd = odd. Always. No exceptions.
+
+Here's why that matters: when n is odd, 3n + 1 is odd × odd + 1. odd × odd is odd. And odd + 1 is even. Always. So 3n + 1, when n is odd, is guaranteed to produce an even number.
+
+Which means the next step is always n/2.
+
+So an odd number never produces another odd number. It jumps to an even number, which then gets halved; possibly multiple times in a row if it's divisible by 2 repeatedly. This built-in "shrink mechanism" is why most sequences trend downward over time despite the occasional spikes from 3n + 1.
+
+The problem isn't that we don't understand the inner workings. The problem is proving that this mechanism is inescapable; that no number, no matter how cleverly structured, can dodge the 4-2-1 loop forever.
+
+Paul Erdős, one of the most brilliant and eccentric mathematicians of the 20th century, reportedly said: "Mathematics is not yet ready for such problems." He offered $500 for a solution; a fortune by his standards; he usually tossed out $10 or $25 for problems he thought were within reach. The $500 was a signal: this one is different. This one is deep.
+
+There's something almost philosophical about it. The rules are deterministic and set; every step is rigid, mechanical, predictable and yet the global behavior is so complex it might as well be random. Simple rules generating profound complexity. It's a tiny universe in two operations.
+
+And there's the quiet poetry of it: every number eventually reaches 1. No matter how high it climbs, no matter how long the journey, the destination is the same. n/2 and 3n + 1 are just two roads; 1 is where they all lead.
+
+Try it yourself. Pick a number and run the sequence by hand. Or write a few lines of code in python; Collatz is a classic beginner programming exercise because it's so simple to implement and so mesmerizing to watch. Try starting with 27: it takes 111 steps to reach 1, climbing as high as 9,232 on the way. That's a lot of drama from two little rules.
+
+Maybe someone reading this will be the one to prove it. Maybe not. But that's the thing about Collatz: it's a reminder that mathematics isn't a finished monument. It's a bottomless ocean. We've mapped the shores and occupy it daily but; the deep water is still dark. And somewhere out there are problems simple enough for a child to understand, beautiful enough to obsess over for a lifetime, and stubborn enough to outlast everyone who tries.
+
+That's worth caring about.
+
+— Bravian Ghosh`
   },
   {
     type: "Poem",
